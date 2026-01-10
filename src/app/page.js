@@ -1,14 +1,14 @@
-import Dashboard from "@/components/Dashboard";
-import Image from "next/image";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "../../auth";
+import Dashboard from "../components/Dashboard";
 
-import React from 'react'
+export default async function Home() {
+  const session = await getServerSession(authOptions);
 
-const page = () => {
-  return (
-    <div>
-      <Dashboard />
-    </div>
-  )
+  if (!session) {
+    redirect("/login");
+  }
+
+  return <Dashboard />;
 }
-
-export default page
